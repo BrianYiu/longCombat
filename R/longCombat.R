@@ -21,7 +21,7 @@
 #'     }
 #'     
 #' @export
-
+library("dplyr")
 longCombat <- function(idvar, timevar, batchvar, features, 
                        formula, ranef, data, niter=30, method='REML', verbose=TRUE){
 
@@ -32,7 +32,7 @@ longCombat <- function(idvar, timevar, batchvar, features,
     stop(message)
   }
   # make batch a factor if not already
-  batch <- droplevels(as.factor(data[,batchvar]))
+  batch <- droplevels(as.factor(pull(data, batchvar)))
   # check for batches with only one observation
   if (min(table(batch)) <= 1) {
     batch_single <- paste(names(table(batch))[table(batch) <= 1], collapse=', ')
